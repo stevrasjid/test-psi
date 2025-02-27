@@ -1,0 +1,10 @@
+select a.id, 
+	   b.id, 
+	   a.nama, 
+	   iif(a.email = '', null, a.email) email, 
+	   a.telp,
+	   b.company_code, 
+	   iif(b.company_name = '', null, b.company_name) company_name
+from userpsi a
+inner join companypsi b on a.id = b.[user_id]
+where a.id != '' order by a.id

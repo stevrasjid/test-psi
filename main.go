@@ -154,22 +154,24 @@ func getArray(c *gin.Context) {
 
 	var result []string
 	j:=0
-
-	for index, color := range colors {
-		if (j > len(clothes)) {
+	i:=0
+	for i < len(colors){
+		if (j >= len(clothes)) {
 			j = 0
 		}
-
-		if (index == 0 || index + 1 == len(colors)){
-			result = append(result, fmt.Sprintf("%s %s %s", clothes[j], color, ads[j]))
+		if (i == 0 || (i + 1 == len(colors) && len(colors) > len(clothes))){
+			result = append(result, fmt.Sprintf("%s %s %s", clothes[j], colors[i], ads[j]))
+			i++
+			j++
 			continue;
 		}
 		
-		if (index % 2 == 1) {
-			result = append(result, fmt.Sprintf("%s %s %s", clothes[index + 1], color, ads[j]))
-		} else if (index % 2 == 0){
-			result = append(result, fmt.Sprintf("%s %s %s", clothes[index - 1], color, ads[j]))
+		if (i % 2 == 1) {
+			result = append(result, fmt.Sprintf("%s %s %s", clothes[j], colors[i+1], ads[j]))
+		} else if (i % 2 == 0){
+			result = append(result, fmt.Sprintf("%s %s %s", clothes[j], colors[i-1], ads[j]))
 		}
+		i++
 		j++
 	}
 
