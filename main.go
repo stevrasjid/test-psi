@@ -20,6 +20,10 @@ type Number1 struct {
 	ProductPrice float64	
 }
 
+type Number2 struct {
+	Username string
+}
+
 func main() {
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
@@ -53,9 +57,20 @@ func getPointNumber1(c *gin.Context){
 }
 
 func getToken(c *gin.Context) {
+	var number2 Number2
+	if err := c.ShouldBindJSON(&number2); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error" : err.Error()})
+		return
+	}
+
+	if number2.Username == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error" : "username is empty"})
+		return
+	}
+
 	claims:= jwt.MapClaims{
 		"id" : uuid.New(),
-		"Username" : "username123",
+		"Username" : number2.Username,
 		"Session_exp" : time.Now().Add(time.Hour * 24).Unix(),
 	}
 
