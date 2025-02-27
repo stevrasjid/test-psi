@@ -48,8 +48,6 @@ func getPointNumber1(c *gin.Context){
 	point := (number1.ProductPrice * (float64(number1.VoucherDiscount) / 100)) * 0.02
 
 	c.JSON(http.StatusOK, gin.H{
-		"discount" : number1.ProductPrice * (float64(number1.VoucherDiscount) / 100),
-		"priceDecrease" : number1.ProductPrice - (number1.ProductPrice * (float64(number1.VoucherDiscount) / 100)),
 		"point" : point,
 	})
 }
